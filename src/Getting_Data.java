@@ -43,7 +43,8 @@ public class Getting_Data {
             }
 
             con.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
+
             //The printStackTrace() method is used to handle exceptions and errors.
             e.printStackTrace();
 
