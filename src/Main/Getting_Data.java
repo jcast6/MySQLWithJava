@@ -1,32 +1,35 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+package Main;
 
+import java.sql.*;
 
 public class Getting_Data {
     public static void main(String[] args) {
+
+        // These are needed to connect to database.
+        String url = "jdbc:mysql://localhost: 3306/getting_data";
+        String username = "root";
+        String password = "peter";
+
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+
 
         // Try{}catch{} is used to connect to the database ,'getting_data', through a localhost and
         // retrieve data from a table.
         try {
 
-            // These are needed to connect to database.
-            String url = "jdbc:mysql://localhost: 3306/getting_data";
-            String username = "root";
-            String password = "peter";
-
             //Opening a JDBC connection.
-            Connection con = DriverManager.getConnection(url, username, password);
+            con = DriverManager.getConnection(url, username, password);
 
             // Statement is the object used to execute a SQL statement and returns the result.
             // This line creates the statement "st".
-            Statement st = con.createStatement();
+            st = con.createStatement();
 
             // ResultSet is a table of data representing a database result set.
             // It is created by executing a SQL query.
             // Here we create the ResultSet, rs, followed by st.executeQuery.
-            ResultSet rs = st.executeQuery("select * from employee;");
+            rs = st.executeQuery("select * from employee;");
 
 
             while (rs.next()) {
@@ -41,13 +44,33 @@ public class Getting_Data {
                 System.out.format("%s, %s %s, %s\n", id, fName, lName, dob);
 
             }
-
-            con.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
 
             //The printStackTrace() method is used to handle exceptions and errors.
             e.printStackTrace();
+        } finally { //Closing all connections.
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
 
+            if(st != null) {
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
