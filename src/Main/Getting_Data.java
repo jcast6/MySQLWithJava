@@ -3,17 +3,16 @@ package Main;
 import java.sql.*;
 
 public class Getting_Data {
+    // These are needed to connect to database.
+    static String url = "jdbc:mysql://localhost: 3306/getting_data";
+    static final String username = "root";
+    static final String password = "peter";
+
+    static Connection con = null;
+    static Statement st = null;
+    static ResultSet rs = null;
+
     public static void main(String[] args) {
-
-        // These are needed to connect to database.
-        String url = "jdbc:mysql://localhost: 3306/getting_data";
-        String username = "root";
-        String password = "peter";
-
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-
 
         // Try{}catch{} is used to connect to the database ,'getting_data', through a localhost and
         // retrieve data from a table.
@@ -21,6 +20,11 @@ public class Getting_Data {
 
             //Opening a JDBC connection.
             con = DriverManager.getConnection(url, username, password);
+        } catch(SQLException e) {
+            e.printStackTrace();
+
+        }
+        try {
 
             // Statement is the object used to execute a SQL statement and returns the result.
             // This line creates the statement "st".
@@ -48,6 +52,7 @@ public class Getting_Data {
 
             //The printStackTrace() method is used to handle exceptions and errors.
             e.printStackTrace();
+
         } finally { //Closing all connections.
             if(rs != null) {
                 try {
