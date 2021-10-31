@@ -6,12 +6,15 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class Db_Home_Page extends JFrame{
+
+public class Db_Home_Page extends JFrame {
+
 
     private static final long serVersUID = 1L;
     private JPanel contentPane;
     JButton logoutButton;
-
+    JFrame frame;
+    JButton stockButton;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -42,6 +45,24 @@ public class Db_Home_Page extends JFrame{
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
+        //the company stock page
+        stockButton = new JButton("Check Stock");
+        stockButton.setBackground(UIManager.getColor("Button.disabledForeground"));
+        stockButton.setForeground(new Color(0, 0, 0));
+        stockButton.setFont(new Font("Times New Roman", Font.ITALIC, 40));
+        stockButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String sql = "Select * from stock;";
+
+
+
+            }
+        });
+        stockButton.setBounds(250, 120, 490, 115);
+        stockButton.setFont(new Font("Times New Roman", Font.ITALIC, 40));
+        contentPane.add(stockButton);
+
+
         //The logout button.
         logoutButton = new JButton("Logout");
         logoutButton.setBackground(UIManager.getColor("Button.disabledForeground"));
@@ -49,23 +70,49 @@ public class Db_Home_Page extends JFrame{
         logoutButton.setFont(new Font("Times New Roman", Font.ITALIC, 40));
         logoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 int a = JOptionPane.showConfirmDialog(logoutButton, "Are you sure you want to logout?");
 
                 if (a == JOptionPane.YES_OPTION) {
                     dispose();
-                    Db_Sign_In user = new Db_Sign_In();
+                    //only to check if working
+                    System.out.println("Options are 'Yes' = 0, 'No' = 1, 'Cancel' = 2");
+                    System.out.println("Values Clicked: " + a);
+                    System.out.println("GoodBye.");
+
                     System.exit(0);
                 }
 
-                dispose();
-                Db_Sign_In user = new Db_Sign_In();
+                else if (a == JOptionPane.NO_OPTION) {
 
-                user.setTitle("Login!");
-                user.setVisible(true);
+                    //only to check if working
+                    System.out.println("Options are 'Yes' = 0, 'No' = 1, 'Cancel' = 2");
+                    System.out.println("Values Clicked: " + a);
+                    System.out.println("Logged In...");
+                    frame.setVisible(true);
+                    return;
+
+                }
+
+
+
+                    /*
+                    String url = "https://www.google.com/";
+                    try {
+                        Desktop.getDesktop().browse(java.net.URI.create(url));
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+
+                     */
+
+                    System.exit(0);
             }
         });
+
         logoutButton.setBounds(250, 320, 490, 115);
         logoutButton.setFont(new Font("Times New Roman", Font.ITALIC, 40));
         contentPane.add(logoutButton);
+
     }
 }
