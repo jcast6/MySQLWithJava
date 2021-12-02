@@ -1,8 +1,5 @@
 package practice;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 public class Student {
     public String first_name;
     public String last_name;
@@ -49,13 +46,14 @@ public class Student {
         return id;
     }
 
-    public String toString(Student stud1) {
-        return first_name + " "  + last_name + " " + dob + " " + id;
-    }
 
-    public String arraysToString(Student stud) {
-        return Arrays.toString(stud);
-
+    public void displayAllStudents(Student stud[]) {
+        System.out.println("All Students: \n");
+        System.out.println("Student id: " + id + " "
+                + "\nStudent name: "
+                + first_name + " " + last_name
+                + "\nD.O.B: " + dob);
+        System.out.println();
     }
 
 }

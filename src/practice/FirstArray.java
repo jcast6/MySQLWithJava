@@ -1,21 +1,31 @@
 package practice;
 
-import java.util.Arrays;
-
 public class FirstArray {
     public static void main(String[] args) {
 
-        Student stud[] = new Student[5];
 
-        Student stud1 = new Student();
-        stud1.setName("Juan", "Castaneda");
-        stud1.setDob("12-47-79");
-        stud1.setId("1234");
+        //Create the Student objects with attributes.
+        Student s1 = new Student();
+        s1.setName("Juan", "Castaneda");
+        s1.setDob("12-47-79");
+        s1.setId("1234");
 
-        stud[0] = stud1;
+        Student s2=  new Student();
+        s2.setName("Juan", "Castaneda");
+        s2.setDob("12-47-79");
+        s2.setId("1234");
 
-        for(int i = 0; i <= stud.length; i++) {
-            System.out.println(Arrays.toString(stud));
+        Student s3 = new Student();
+        s3.setName("Juan", "Castaneda");
+        s3.setDob("12-47-79");
+        s3.setId("1234");
+
+        //Create the array with objects.
+        Student stud[] = {s1, s2, s3 };
+
+        //Use for each loop to iterate through the array of objects and print the data using displayAllStudents() method.
+        for(Student s : stud) {
+            s.displayAllStudents(stud);
         }
 
 
