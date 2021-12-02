@@ -3,27 +3,27 @@ package practice;
 public class FirstArray {
     public static void main(String[] args) {
 
-
         //Create the Student objects with attributes.
         Student s1 = new Student();
         s1.setName("Juan", "Castaneda");
-        s1.setDob("12-47-79");
-        s1.setId("1234");
+        s1.setDob("12-2-04");
+        s1.setId("1111");
 
         Student s2=  new Student();
-        s2.setName("Juan", "Castaneda");
-        s2.setDob("12-47-79");
-        s2.setId("1234");
+        s2.setName("Paul", "Lopez");
+        s2.setDob("10-3-04");
+        s2.setId("2222");
 
         Student s3 = new Student();
-        s3.setName("Juan", "Castaneda");
-        s3.setDob("12-47-79");
-        s3.setId("1234");
+        s3.setName("Reese", "Garcia");
+        s3.setDob("04-05-04");
+        s3.setId("3333");
 
         //Create the array with objects.
         Student stud[] = {s1, s2, s3 };
 
         //Use for each loop to iterate through the array of objects and print the data using displayAllStudents() method.
+        System.out.println("Displaying all Students: ");
         for(Student s : stud) {
             s.displayAllStudents(stud);
         }

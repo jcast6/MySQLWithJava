@@ -46,14 +46,11 @@ public class Student {
         return id;
     }
 
-
     public void displayAllStudents(Student stud[]) {
-        System.out.println("All Students: \n");
         System.out.println("Student id: " + id + " "
                 + "\nStudent name: "
                 + first_name + " " + last_name
                 + "\nD.O.B: " + dob);
         System.out.println();
     }
-
 }
