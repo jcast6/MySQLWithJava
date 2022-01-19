@@ -53,7 +53,7 @@ public class Db_Sign_In extends JFrame {
         contentPane.add(loginLb);
 
         //Creating the Username label.
-        JLabel usernameLabel = new JLabel("Username");
+        JLabel usernameLabel = new JLabel("Email");
         usernameLabel.setBounds(250, 165, 195, 50);
         usernameLabel.setBackground(Color.BLACK);
         usernameLabel.setForeground(Color.BLACK);
@@ -85,7 +85,7 @@ public class Db_Sign_In extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String userName = textF.getText();
+                String email = textF.getText();
                 String pw = pwField.getText();
 
                 // Try{}catch{} is used to connect to the database ,'getting_data', through a localhost and
@@ -96,15 +96,15 @@ public class Db_Sign_In extends JFrame {
                     con = DriverManager.getConnection(url, username, password);
 
                     //Getting the login information.
-                    PreparedStatement pst = (PreparedStatement) con.prepareStatement("Select emp_name, emp_password from emp_login where emp_name=? and emp_password=?");
+                    PreparedStatement pst = (PreparedStatement) con.prepareStatement("Select emp_email, emp_password from emp_login where emp_email=? and emp_password=?");
 
-                    pst.setString(1, userName);
+                    pst.setString(1, email);
                     pst.setString(2, pw);
                     ResultSet rs = pst.executeQuery();
 
                     if(rs.next()) {
                         dispose();
-                        Db_Home_Page newUser =  new Db_Home_Page(userName);
+                        Db_Home_Page newUser =  new Db_Home_Page(email);
                         newUser.setTitle("Database Homepage!");
                         newUser.setVisible(true);
                         JOptionPane.showMessageDialog(loginButton, "Login successful!");

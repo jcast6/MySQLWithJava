@@ -52,20 +52,43 @@ public class Db_Home_Page extends JFrame {
         stockButton.setFont(new Font("Times New Roman", Font.ITALIC, 40));
         stockButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String sql = "Select * from stock;";
+                int b = JOptionPane.showConfirmDialog(stockButton, "Click to open stock page.", "Check Stock?", JOptionPane.YES_NO_OPTION);
 
+                if (b == JOptionPane.YES_OPTION) {
+                    dispose();
+                    //only to check if working
+                    System.out.println("Options are 'Yes' = 0, 'No' = 1,");
+                    System.out.println("Values Clicked: " + b);
+                    System.out.println("Stock not viewed.");
 
+                    StockPage newStockPageView = new StockPage();
+                    newStockPageView.setTitle("Stock Page");
+                    newStockPageView.setVisible(true);
+                    JOptionPane.showMessageDialog(stockButton, "Welcome to the stock page!!");
 
+                }
+
+                else if (b == JOptionPane.NO_OPTION) {
+
+                    //only to check if working
+                    System.out.println("Options are 'Yes' = 0, 'No' = 1");
+                    System.out.println("Values Clicked: " + b);
+                    System.out.println("Checking stock...");
+                    frame.setVisible(true);
+                    return;
+
+                }
             }
         });
+
         stockButton.setBounds(250, 120, 490, 115);
+        stockButton.setBackground(Color.GREEN);
         stockButton.setFont(new Font("Times New Roman", Font.ITALIC, 40));
         contentPane.add(stockButton);
 
-
         //The logout button.
         logoutButton = new JButton("Logout");
-        logoutButton.setBackground(UIManager.getColor("Button.disabledForeground"));
+        logoutButton.setBackground(Color.GREEN);
         logoutButton.setForeground(new Color(0, 0, 0));
         logoutButton.setFont(new Font("Times New Roman", Font.ITALIC, 40));
         logoutButton.addActionListener(new ActionListener() {
@@ -80,32 +103,10 @@ public class Db_Home_Page extends JFrame {
                     System.out.println("Values Clicked: " + a);
                     System.out.println("GoodBye.");
 
-                    System.exit(0);
-                }
-
-                else if (a == JOptionPane.NO_OPTION) {
-
-                    //only to check if working
-                    System.out.println("Options are 'Yes' = 0, 'No' = 1, 'Cancel' = 2");
-                    System.out.println("Values Clicked: " + a);
-                    System.out.println("Logged In...");
-                    frame.setVisible(true);
-                    return;
+                } else if(a == JOptionPane.NO_OPTION) {
+                    JOptionPane.showMessageDialog(stockButton, "Login not successful!");
 
                 }
-
-
-
-                    /*
-                    String url = "https://www.google.com/";
-                    try {
-                        Desktop.getDesktop().browse(java.net.URI.create(url));
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-
-                     */
-
                     System.exit(0);
             }
         });
