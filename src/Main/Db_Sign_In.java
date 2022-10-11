@@ -9,22 +9,24 @@ package Main;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
+
 
 public class Db_Sign_In extends JFrame{
 
     // These are needed to connect to database.
     String url = "jdbc:mysql://localhost: 3306/getting_data";
-    String username = "root";
-    String password = "peter";
+    private final String username = "root";
+    private final String password = "peter";
     Connection con;
 
     private final JTextField textF;
     private final JPasswordField pwField;
     private final JButton loginButton;
     JLabel label;
-    JPanel contentPane; //cannot be final
+    JPanel contentPane; // not final
+
+
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -39,8 +41,9 @@ public class Db_Sign_In extends JFrame{
 
     //Creating the frame.
     public Db_Sign_In() {
-        setBounds(500, 200, 1000, 600);
+        setSize(1000, 1000);
         setResizable(true);
+        setTitle("Juan and Sons Inc.");
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,19 +52,21 @@ public class Db_Sign_In extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Creating the login label.
-        JLabel loginLb = new JLabel("Login");
-        loginLb.setBounds(430, 15, 280, 100);
+        JLabel loginLb = new JLabel("Authorized personal only!");
+        loginLb.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        loginLb.setBounds(430, 15, 1000,  100);
         loginLb.setForeground(Color.BLACK);
         contentPane.add(loginLb);
 
-        //Creating the Username label.
-        JLabel usernameLabel = new JLabel("Email");
-        usernameLabel.setBounds(250, 165, 195, 50);
+        //Creating the email label.
+        JLabel usernameLabel = new JLabel("Email:");
+        usernameLabel.setBounds(372, 170, 195, 50);
+        usernameLabel.setFont(new Font("Times New Roman", Font.BOLD, 30));
         usernameLabel.setBackground(Color.BLACK);
         usernameLabel.setForeground(Color.BLACK);
         contentPane.add(usernameLabel);
 
-        //The username text field.
+        //The username/email text field.
         textF = new JTextField();
         textF.setBounds(480, 170, 280, 68);
         textF.setFont(new Font("Times New Roman", Font.ITALIC, 40));
@@ -69,8 +74,9 @@ public class Db_Sign_In extends JFrame{
         contentPane.add(textF);
 
         //The password label
-        JLabel pwLabel = new JLabel("Password");
-        pwLabel.setBounds(250, 286, 195, 50);
+        JLabel pwLabel = new JLabel("Password: ");
+        pwLabel.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        pwLabel.setBounds(345, 286, 195, 50);
         pwLabel.setBackground(Color.BLACK);
         pwLabel.setForeground(Color.BLACK);
         contentPane.add(pwLabel);
@@ -102,8 +108,6 @@ public class Db_Sign_In extends JFrame{
                 //+------------+------------+------------------+----------------------------------+
                 //| emp_f_name | emp_l_name | emp_email        | emp_password                     |
                 //+------------+------------+------------------+----------------------------------+
-                //| my         | love       | jazmin           | ...                           |
-                //| Juan       | Castaneda  | juan@company.com | ...                         |
                 //| paul       | fish       | paul@co.com      | ba6668af84b8057140fdedfddbac8a38 |
                 //+------------+------------+------------------+----------------------------------+
 
@@ -136,6 +140,4 @@ public class Db_Sign_In extends JFrame{
         label.setBounds(0, 0, 1008, 562);
         contentPane.add(label);
     }
-
-
 }
