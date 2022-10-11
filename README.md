@@ -1,7 +1,6 @@
-# MySQLWithJava-And-Java-Practice
+# MySQLWithJava-Practice
 
-## MySQLWithJava-And-Java-Practice
-This app connects to a MySql database, followed by having the user login at the sign in page. After this the user will be taken to the options page,
+The following apps connects to a MySql database, followed by having the user login at the sign in page. After this the user will be taken to the options page,
 here the user can select whether they want to see the inventory, check prices etc... The data used to generate the results of logging in, seeing the inventory, 
 prices and others are located in a MySql database, called getting_data. This is a working progress, and this program is used to help me 
 understand how Java and MySql concepts.
