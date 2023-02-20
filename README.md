@@ -17,7 +17,7 @@ Steps:
     - export your excel file of data in Excel to CSV and import that in MySQL Workbench using 
       the MySql "Table data import Wizard".
       
-4. This project is still a work in progress for education purposes and for fun as well.
+
       
      
  
