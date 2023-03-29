@@ -1,5 +1,5 @@
 package Main;
-/*This application is created to practice java and MySql, and develop knowledge of java
+/*This application is created to practice java and MySql, and learn about java
   and MySql.
 
   This is the first page of a store inventory page. The employee has to login by
@@ -9,22 +9,19 @@ package Main;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 
 
 public class Db_Sign_In extends JFrame{
 
-    // These are needed to connect to database.
-    String url = "jdbc:mysql://localhost: 3306/getting_data";
-    private final String username = "root";
-    private final String password = "peter";
-    Connection con;
-
     private final JTextField textF;
     private final JPasswordField pwField;
     private final JButton loginButton;
+    private final JButton registerPage;
     JLabel label;
-    JPanel contentPane; // not final
+    JPanel contentPane;
 
 
 
@@ -52,7 +49,7 @@ public class Db_Sign_In extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Creating the login label.
-        JLabel loginLb = new JLabel("Authorized personal only!");
+        JLabel loginLb = new JLabel("Employees Login");
         loginLb.setFont(new Font("Times New Roman", Font.BOLD, 30));
         loginLb.setBounds(430, 15, 1000,  100);
         loginLb.setForeground(Color.BLACK);
@@ -88,6 +85,23 @@ public class Db_Sign_In extends JFrame{
         contentPane.add(pwField);
 
         //The login button
+        registerPage = new JButton("New User Registration");
+        registerPage.setBounds(350, 395, 165, 55);
+
+        contentPane.add(registerPage);
+/*
+        registerPage.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Open the Register.java class
+                Register register = new Register();
+                //register.setVisible(true);
+                dispose(); // Close the current login window
+            }
+        });
+
+ */
+
+        //The login button
         loginButton = new JButton("Login");
         loginButton.setBounds(550, 395, 165, 55);
         loginButton.addActionListener(e -> {
@@ -100,7 +114,7 @@ public class Db_Sign_In extends JFrame{
             try {
 
                 //Opening a JDBC connection.
-                con = DriverManager.getConnection(url, username, password);
+                //con = DriverManager.getConnection(url, username, password);
 
                 //Getting the login information.
                 //Used MD5(?) to get hashed password
@@ -111,8 +125,7 @@ public class Db_Sign_In extends JFrame{
                 //| paul       | fish       | paul@co.com      | ba6668af84b8057140fdedfddbac8a38 |
                 //+------------+------------+------------------+----------------------------------+
 
-                PreparedStatement pst = con.prepareStatement("Select emp_email, emp_password from emp_login where emp_email=? and emp_password= MD5(?)");
-
+                PreparedStatement pst = Connect_to_DB.getConnection().prepareStatement("Select emp_email, emp_password from emp_login where emp_email=? and emp_password= ?");
                 pst.setString(1, email);
                 pst.setString(2, pw);
                 ResultSet rs = pst.executeQuery();
@@ -139,5 +152,7 @@ public class Db_Sign_In extends JFrame{
         label = new JLabel("");
         label.setBounds(0, 0, 1008, 562);
         contentPane.add(label);
+
+
     }
 }
