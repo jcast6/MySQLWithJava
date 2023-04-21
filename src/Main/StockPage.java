@@ -10,19 +10,15 @@ import java.sql.*;
 
 public class StockPage extends JFrame {
     JPanel contentPane;
-    JButton displayStock;
-    JFrame frame;
     JButton stockButton1;
     JButton stockButton2;
-
-    // These are needed to connect to database.
-    String url = "jdbc:mysql://localhost: 3306/getting_data";
-    String username = "root";
-    String password = "peter";
-    Connection con;
+    DefaultTableModel table1;
+    DefaultTableModel table2;
     Statement st1;
     ResultSet rs1;
     ResultSet rs2;
+    JButton addStockItem;
+
 
 
     public static void main(String[] args) {
@@ -53,7 +49,7 @@ public class StockPage extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        //thiis button will display all the items in the store
+        //this button will display all the items in the store
         stockButton1 = new JButton("All Items");
         stockButton1.setBounds(100, 15, 195, 120);
         stockButton1.setBackground(UIManager.getColor("Button.disabledForeground"));
@@ -65,14 +61,14 @@ public class StockPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int a = JOptionPane.showConfirmDialog(stockButton1, "Do you want to see all the items?", "Inventory", JOptionPane.YES_NO_OPTION);
 
+
                 if (a == JOptionPane.YES_OPTION) {
                     try {
 
-                        con = DriverManager.getConnection(url, username, password);
 
                         // Statement is the object used to execute a SQL statement and returns the result.
                         // This line creates the statement "st".
-                        st1 = con.createStatement();
+                        st1 = Connect_to_DB.getConnection().createStatement();
 
                         // ResultSet is a table of data representing a database result set.
                         // It is created by executing a SQL query.
@@ -92,18 +88,18 @@ public class StockPage extends JFrame {
                             i++;
                         }
 
-                        DefaultTableModel newTable = new DefaultTableModel(data, columns);
-                        JTable table = new JTable(newTable);
-                        table.setShowGrid(true);
-                        table.setShowVerticalLines(true);
-                        JScrollPane pane = new JScrollPane(table);
+                        table1 = new DefaultTableModel(data, columns);
+                        JTable jtable1 = new JTable(table1);
+                        jtable1.setShowGrid(true);
+                        jtable1.setShowVerticalLines(true);
+                        JScrollPane pane = new JScrollPane(jtable1);
                         JFrame f = new JFrame("Populate the table from database");
                         JPanel panel = new JPanel();
                         panel.add(pane);
                         f.add(panel);
                         f.setSize(500, 300);
-                        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         f.setVisible(true);
+
 
 
                         /**
@@ -132,11 +128,13 @@ public class StockPage extends JFrame {
                         //The printStackTrace() method is used to handle exceptions and errors.
                         ec.printStackTrace();
 
+
                     }
                     //only to check if working
                     System.out.println("Options are 'Yes' = 0, 'No' = 1,");
                     System.out.println("Values Clicked: " + a);
                     System.out.println("All stock displayed.");
+                    contentPane.setVisible(true);
 
                 } else if (a == JOptionPane.NO_OPTION) {
 
@@ -144,6 +142,7 @@ public class StockPage extends JFrame {
                     System.out.println("Options are 'Yes' = 0, 'No' = 1");
                     System.out.println("Values Clicked: " + a);
                     System.out.println("Goodbye!");
+                    contentPane.setVisible(true);
 
                 }
             }
@@ -164,11 +163,10 @@ public class StockPage extends JFrame {
                 if (a == JOptionPane.YES_OPTION) {
                     try {
 
-                        con = DriverManager.getConnection(url, username, password);
 
                         // Statement is the object used to execute a SQL statement and returns the result.
-                        // This line creates the statement "st".
-                        st1 = con.createStatement();
+                        // This line creates the statement "st" and we get a connection through the Connect_to_DB.java class.
+                        st1 = Connect_to_DB.getConnection().createStatement();
 
                         // ResultSet is a table of data representing a database result set.
                         // It is created by executing a SQL query.
@@ -181,7 +179,7 @@ public class StockPage extends JFrame {
                         int i = 0;
 
                         while (rs2.next()) {
-                            int sku = rs2.getInt("SKU");
+                            String sku = rs2.getString("SKU");
                             String prod_name = rs2.getString("product_name");
                             String amount = rs2.getString("amount");
                             data[i][0] = sku + "";
@@ -190,19 +188,17 @@ public class StockPage extends JFrame {
                             i++;
                         }
 
-                        DefaultTableModel newTable = new DefaultTableModel(data, columns);
-                        JTable table = new JTable(newTable);
-                        table.setShowGrid(true);
-                        table.setShowVerticalLines(true);
-                        JScrollPane pane = new JScrollPane(table);
+                        table2 = new DefaultTableModel(data, columns);
+                        JTable jTable2 = new JTable(table2);
+                        jTable2.setShowGrid(true);
+                        jTable2.setShowVerticalLines(true);
+                        JScrollPane pane = new JScrollPane(jTable2);
                         JFrame f = new JFrame("Products with current amounts");
                         JPanel panel = new JPanel();
                         panel.add(pane);
                         f.add(panel);
                         f.setSize(500, 300);
-                        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         f.setVisible(true);
-
 
                         /**
                          *
@@ -225,6 +221,7 @@ public class StockPage extends JFrame {
                          *
                          *
                          */
+
                     } catch (SQLException ec) {
 
                         //The printStackTrace() method is used to handle exceptions and errors.
@@ -235,6 +232,7 @@ public class StockPage extends JFrame {
                     System.out.println("Options are 'Yes' = 0, 'No' = 1,");
                     System.out.println("Values Clicked: " + a);
                     System.out.println("All stock displayed.");
+                    contentPane.setVisible(true);
 
                 } else if (a == JOptionPane.NO_OPTION) {
 
@@ -242,10 +240,100 @@ public class StockPage extends JFrame {
                     System.out.println("Options are 'Yes' = 0, 'No' = 1");
                     System.out.println("Values Clicked: " + a);
                     System.out.println("Goodbye!");
+                    contentPane.setVisible(true);
 
                 }
             }
         });
 
+
+        // Create the "Add New Item" button
+        JButton addStockItem = new JButton("Add New Item");
+        addStockItem.setBounds(100, 150, 195, 120);
+        addStockItem.setBackground(UIManager.getColor("Button.disabledForeground"));
+        addStockItem.setForeground(new Color(0, 0, 0));
+        addStockItem.setFont(new Font("Times New Roman", Font.TYPE1_FONT, 15));
+        contentPane.add(addStockItem);
+        addStockItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Show a confirmation dialog box with "Yes" and "No" options
+                int result = JOptionPane.showConfirmDialog(contentPane, "Add new item?", "Confirm", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    // The user clicked "Yes", so show a dialog box to enter the item details
+                    JTextField itemNameField = new JTextField();
+                    JTextField skuNumberField = new JTextField();
+                    JTextField amountField = new JTextField();
+                    Object[] fields = {
+                            "Item Name:", itemNameField,
+                            "SKU Number:", skuNumberField,
+                            "Amount:", amountField
+                    };
+                    int input = JOptionPane.showConfirmDialog(contentPane, fields, "Enter item details", JOptionPane.OK_CANCEL_OPTION);
+
+                    if (input == JOptionPane.OK_OPTION) {
+                        // The user entered item details and clicked "OK", so process the input here
+                        String itemName = itemNameField.getText();
+                        String skuNumber = skuNumberField.getText();
+                        int amount = Integer.parseInt(amountField.getText());
+
+                        // Add the item details to the "product_with_amounts" table
+                        try {
+
+                            PreparedStatement statement = Connect_to_DB.getConnection().prepareStatement("INSERT INTO products_with_amounts (SKU, product_name, amount) VALUES (?, ?, ?)");
+                            statement.setString(1, itemName);
+                            statement.setString(2, skuNumber);
+                            statement.setInt(3, amount);
+                            statement.executeUpdate();
+
+                            PreparedStatement statement1 = Connect_to_DB.getConnection().prepareStatement("INSERT INTO stock_inventory(SKU, product_name) VALUES (?, ?)");
+                            statement1.setString(1, itemName);
+                            statement1.setString(2, skuNumber);
+                            statement1.executeUpdate();
+
+                            // Reload the data for the "All Items" table
+                            String q = "SELECT * FROM stock_inventory";
+                            String q1 = "SELECT * FROM products_with_amounts";
+                            refreshTableData(table1, statement1, q);
+                            refreshTableData(table2, statement, q1);
+
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
+    public void refreshTableData(DefaultTableModel tableModel, PreparedStatement statement, String q) {
+        try {
+            // Execute the query to retrieve the data
+            ResultSet rs = statement.executeQuery(q);
+
+            // Check if tableModel is null
+            if (tableModel == null) {
+                tableModel = new DefaultTableModel();
+            }
+
+            // Remove all existing rows from the table model
+            tableModel.setRowCount(0);
+
+            // Loop through the result set and add each row to the table model
+            while (rs.next()) {
+                Object[] row = new Object[tableModel.getColumnCount()];
+                for (int i = 0; i < tableModel.getColumnCount(); i++) {
+                    row[i] = rs.getObject(i + 1);
+                }
+                tableModel.addRow(row);
+            }
+
+            // Close the result set
+            rs.close();
+        } catch (SQLException ex) {
+            // Handle any exceptions
+            ex.printStackTrace();
+        }
     }
 }
