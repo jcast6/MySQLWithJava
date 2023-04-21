@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -51,6 +53,19 @@ public class Register extends JFrame {
         idField.setSize(190, 20);
         idField.setLocation(180, 75);
         container.add(idField);
+
+        //focus listener to see if field matches required text
+        idField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                String input = idField.getText();
+                String pattern = "^[0-9]{3}$"; // ID should be 3 characters long and only contain letters and digits
+                if (!input.matches(pattern)) {
+                    JOptionPane.showMessageDialog(null, "Invalid ID. Please enter a valid ID with 3 characters, consisting of letters and digits only.");
+                    idField.requestFocus();
+                }
+            }
+        });
 
         fnameLabel = new JLabel("First Name:");
         fnameLabel.setSize(100, 20);
@@ -110,7 +125,7 @@ public class Register extends JFrame {
         // Button to register new emp
         registerButton = new JButton("Register New Employee");
         registerButton.setBounds(350, 395, 165, 55);
-
+        container.add(registerButton);
 
         // Add an action listener to the register button
         registerButton.addActionListener(new ActionListener() {
@@ -124,9 +139,27 @@ public class Register extends JFrame {
                 String email = emailField.getText();
                 String password = new String(passwordField.getPassword());
 
+                // Check if all the fields are filled
+                if (userId.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || department.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all the fields.");
+                    return;
+                }
+
+                int choice = JOptionPane.showOptionDialog(null, "Registration Successful!", "Registration",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] { "Login", "Exit" }, null);
+
+                if (choice == 0) {
+                    // Create a new instance of the sign in window
+                    Db_Sign_In signIn = new Db_Sign_In();
+                    signIn.setVisible(true);
+                    dispose(); // Close the current registration window
+                } else if (choice == 1) {
+                    System.exit(0);
+                }
+
                 // Insert the user into the database
                 try {
-                    PreparedStatement statement = Connect_to_DB.getConnection().prepareStatement("INSERT INTO employee(user_id, first_name, last_name, department, email, password) VALUES (?, ?, ?, ?, ?, ?)");
+                    PreparedStatement statement = Connect_to_DB.getConnection().prepareStatement("INSERT INTO employee(user_id, first_name, last_name, department, email, password) VALUES (?, ?, ?, ?, ?, SHA2(?, 256))");
                     statement.setString(1, userId);
                     statement.setString(2, firstName);
                     statement.setString(3, lastName);
@@ -134,27 +167,21 @@ public class Register extends JFrame {
                     statement.setString(5, email);
                     statement.setString(6, password);
                     statement.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Registration successful!");
 
-                    PreparedStatement statement1 = Connect_to_DB.getConnection().prepareStatement("INSERT INTO emp_login(emp_f_name, emp_l_name, emp_email, emp_password) VALUES (?, ?, ?, ?)");
+                    PreparedStatement statement1 = Connect_to_DB.getConnection().prepareStatement("INSERT INTO emp_login(emp_f_name, emp_l_name, emp_email, emp_password) VALUES (?, ?, ?, SHA2(?, 256))");
+
                     statement1.setString(1, firstName);
                     statement1.setString(2, lastName);
                     statement1.setString(3, email);
                     statement1.setString(4, password);
                     statement1.executeUpdate();
-
-                    // Create a new instance of the sign in window
-                    Db_Sign_In signIn = new Db_Sign_In();
-                    signIn.setVisible(true);
-                    dispose(); // Close the current registration window
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Registration failed.");
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
         });
-    }
 
+    }
 }
 
 
