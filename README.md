@@ -8,10 +8,10 @@ understand how Java and MySql concepts.
 Steps: 
 1. create a MySql database 'getting_data'
 2. create tables in getting_data.
-    - emp_login table
-    - products_with_amounts table
-    - stock_inventory table, this is just a table of the products
-    - employee table
+    - emp_login,
+    - products_with_amounts,
+    - stock_inventory, this is just a table of the products
+    - employee 
     
 3. get excel sheet of the products with amounts and employee data and import data into tables 
     - export your excel file of data in Excel to CSV and import that in MySQL Workbench using 
