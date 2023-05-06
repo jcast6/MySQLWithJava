@@ -48,7 +48,7 @@ public class Db_Sign_In extends JFrame{
         contentPane.setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Creating the login label.
+        //Creating the page title.
         JLabel loginLb = new JLabel("Employees Login");
         loginLb.setFont(new Font("Times New Roman", Font.BOLD, 30));
         loginLb.setBounds(430, 15, 1000,  100);
@@ -84,22 +84,21 @@ public class Db_Sign_In extends JFrame{
         pwField.setFont(new Font("Times New Roman", Font.ITALIC, 40));
         contentPane.add(pwField);
 
-        //The login button
-        registerPage = new JButton("New User Registration");
+        // Button to register new emp
+        registerPage = new JButton("Register New Employee");
         registerPage.setBounds(350, 395, 165, 55);
 
         contentPane.add(registerPage);
-/*
+
         registerPage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open the Register.java class
                 Register register = new Register();
-                //register.setVisible(true);
+                register.setVisible(true);
                 dispose(); // Close the current login window
             }
         });
 
- */
 
         //The login button
         loginButton = new JButton("Login");
@@ -113,19 +112,7 @@ public class Db_Sign_In extends JFrame{
             // retrieve data from a table.
             try {
 
-                //Opening a JDBC connection.
-                //con = DriverManager.getConnection(url, username, password);
-
-                //Getting the login information.
-                //Used MD5(?) to get hashed password
-                // emp_login table
-                //+------------+------------+------------------+----------------------------------+
-                //| emp_f_name | emp_l_name | emp_email        | emp_password                     |
-                //+------------+------------+------------------+----------------------------------+
-                //| paul       | fish       | paul@co.com      | ba6668af84b8057140fdedfddbac8a38 |
-                //+------------+------------+------------------+----------------------------------+
-
-                PreparedStatement pst = Connect_to_DB.getConnection().prepareStatement("Select emp_email, emp_password from emp_login where emp_email=? and emp_password= ?");
+                PreparedStatement pst = Connect_to_DB.getConnection().prepareStatement("Select emp_email, emp_password from emp_login where emp_email=? and emp_password= SHA2(?, 256)");
                 pst.setString(1, email);
                 pst.setString(2, pw);
                 ResultSet rs = pst.executeQuery();

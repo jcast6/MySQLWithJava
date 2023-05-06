@@ -78,6 +78,11 @@ public class Db_Home_Page extends JFrame {
 
                 if (a == JOptionPane.YES_OPTION) {
                     dispose();
+                    // Create a new instance of the sign in window
+                    Db_Sign_In backToLogIn = new Db_Sign_In();
+                    backToLogIn.setVisible(true);
+                    dispose(); // Close the current registration window
+
                     //only to check if working
                     System.out.println("Options are 'Yes' = 0, 'No' = 1");
                     System.out.println("Values Clicked: " + a);
