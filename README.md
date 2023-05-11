@@ -1,21 +1,18 @@
 # MySQLWithJava-Practice
 
-The following apps connects to a MySql database, followed by having the user login at the sign in page. After this the user will be taken to the options page,
-here the user can select whether they want to see the inventory, check prices etc... The data used to generate the results of logging in, seeing the inventory, 
-prices and others are located in a MySql database, called getting_data. This is a work in progress, and this program is used to help me 
-understand how Java and MySql concepts.
+This is a Java application for a store to check inventory, employee directory, register an employee, and add new items to inventory.
 
 Steps: 
-1. create a MySql database 'getting_data'
-2. create tables in getting_data.
-    - emp_login,
-    - products_with_amounts,
-    - stock_inventory, this is just a table of the products
-    - employee 
-    
-3. get excel sheet of the products with amounts and employee data and import data into tables 
-    - export your excel file of data in Excel to CSV and import that in MySQL Workbench using 
-      the MySql "Table data import Wizard".
+1. This app was created using MySQL workbench. When creating the database, go workbench, make sure you are connected to server.
+
+2.Once you are connected, go to "Server" on the toolbar, in the drop down click data import.
+
+3. Select "Import from Dump Project Folder", and find the path of the dump folder.
+
+4. for the "Default Target Schema" you can click "New" and then name the database "getting_data", this is the name of        the database used in this application.
+
+5. Then click start import and you should have a database "getting_data" with tables. 
+   
       
 
       
