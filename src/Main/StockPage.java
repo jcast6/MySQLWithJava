@@ -17,8 +17,7 @@ public class StockPage extends JFrame {
     Statement st1;
     ResultSet rs1;
     ResultSet rs2;
-    JButton addStockItem;
-
+    JButton backButton;
 
 
     public static void main(String[] args) {
@@ -38,6 +37,7 @@ public class StockPage extends JFrame {
 
     }
 
+
     //The frame for the stock page.
     public StockPage(String user) {
         setBounds(500, 200, 1015, 600);
@@ -52,15 +52,14 @@ public class StockPage extends JFrame {
         //this button will display all the items in the store
         stockButton1 = new JButton("All Items");
         stockButton1.setBounds(100, 15, 195, 120);
-        stockButton1.setBackground(UIManager.getColor("Button.disabledForeground"));
-        stockButton1.setForeground(new Color(0, 0, 0));
-        stockButton1.setFont(new Font("Times New Roman", Font.TYPE1_FONT, 15));
+        stockButton1.setFont(new Font("Arial", Font.BOLD, 15));
+        stockButton1.setForeground(Color.WHITE);
+        stockButton1.setBackground(new Color(56, 100, 100));
         contentPane.add(stockButton1);
         stockButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int a = JOptionPane.showConfirmDialog(stockButton1, "Do you want to see all the items?", "Inventory", JOptionPane.YES_NO_OPTION);
-
 
                 if (a == JOptionPane.YES_OPTION) {
                     try {
@@ -100,8 +99,6 @@ public class StockPage extends JFrame {
                         f.setSize(500, 300);
                         f.setVisible(true);
 
-
-
                         /**
                          *
                          * This will be displayed in the console not gui.
@@ -128,7 +125,6 @@ public class StockPage extends JFrame {
                         //The printStackTrace() method is used to handle exceptions and errors.
                         ec.printStackTrace();
 
-
                     }
                     //only to check if working
                     System.out.println("Options are 'Yes' = 0, 'No' = 1,");
@@ -152,8 +148,9 @@ public class StockPage extends JFrame {
         stockButton2 = new JButton("Items with count");
         stockButton2.setBounds(400, 15, 195, 120);
         stockButton2.setBackground(UIManager.getColor("Button.disabledForeground"));
-        stockButton2.setForeground(new Color(0, 0, 0));
-        stockButton2.setFont(new Font("Times New Roman", Font.TYPE1_FONT, 15));
+        stockButton2.setForeground(Color.WHITE);
+        stockButton2.setBackground(new Color(56, 100, 100));
+        stockButton2.setFont(new Font("Arial", Font.BOLD, 15));
         contentPane.add(stockButton2);
         stockButton2.addActionListener(new ActionListener() {
             @Override
@@ -162,7 +159,6 @@ public class StockPage extends JFrame {
 
                 if (a == JOptionPane.YES_OPTION) {
                     try {
-
 
                         // Statement is the object used to execute a SQL statement and returns the result.
                         // This line creates the statement "st" and we get a connection through the Connect_to_DB.java class.
@@ -251,8 +247,8 @@ public class StockPage extends JFrame {
         JButton addStockItem = new JButton("Add New Item");
         addStockItem.setBounds(100, 150, 195, 120);
         addStockItem.setBackground(UIManager.getColor("Button.disabledForeground"));
-        addStockItem.setForeground(new Color(0, 0, 0));
-        addStockItem.setFont(new Font("Times New Roman", Font.TYPE1_FONT, 15));
+        addStockItem.setForeground(Color.WHITE);
+        addStockItem.setBackground(new Color(56, 100, 100));
         contentPane.add(addStockItem);
         addStockItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -305,7 +301,34 @@ public class StockPage extends JFrame {
             }
         });
 
+
+        // Add an action listener to the register button
+        backButton = new JButton("Previous Page");
+        backButton.setBounds(10, 450, 150, 50);
+        backButton.setBackground(UIManager.getColor("Button.disabledForeground"));
+        backButton.setForeground(Color.WHITE);
+        backButton.setBackground(new Color(56, 100, 100));
+        backButton.setFont(new Font("Arial", Font.TYPE1_FONT, 10));
+        contentPane.add(backButton);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int choice = JOptionPane.showOptionDialog(null, "Go to Previous Page?", "Confirm",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Previous Page", "Exit"}, null);
+
+                if (choice == 0) {
+                    // Create a new instance of the sign in window
+                    Db_Home_Page backToHome = new Db_Home_Page(user);
+                    backToHome.setVisible(true);
+                    dispose(); // Close the current registration window
+                } else if (choice == 1) {
+                    System.exit(0);
+                }
+            }
+        });
     }
+
 
     public void refreshTableData(DefaultTableModel tableModel, PreparedStatement statement, String q) {
         try {
