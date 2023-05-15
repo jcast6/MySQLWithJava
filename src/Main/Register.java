@@ -38,9 +38,9 @@ public class Register extends JFrame {
         container.setLayout(null);
 
         pageHeading = new JLabel("New Employee Registration Form");
-        pageHeading.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        pageHeading.setSize(300, 30);
-        pageHeading.setLocation(250, 30);
+        pageHeading.setFont(new Font("Arial", Font.BOLD, 25));
+        pageHeading.setSize(400, 30);
+        pageHeading.setLocation(100, 30);
         container.add(pageHeading);
 
         id = new JLabel("ID:");
@@ -49,7 +49,7 @@ public class Register extends JFrame {
         container.add(id);
 
         idField = new JTextField();
-        idField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        idField.setFont(new Font("Arial", Font.PLAIN, 15));
         idField.setSize(190, 20);
         idField.setLocation(180, 75);
         container.add(idField);
@@ -73,7 +73,7 @@ public class Register extends JFrame {
         container.add(fnameLabel);
 
         firstNameField = new JTextField();
-        firstNameField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        firstNameField.setFont(new Font("Arial", Font.PLAIN, 15));
         firstNameField.setSize(190, 20);
         firstNameField.setLocation(180, 120);
         container.add(firstNameField);
@@ -84,7 +84,7 @@ public class Register extends JFrame {
         container.add(lnameLabel);
 
         lastNameField = new JTextField();
-        lastNameField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        lastNameField.setFont(new Font("Arial", Font.PLAIN, 15));
         lastNameField.setSize(190, 20);
         lastNameField.setLocation(180,150);
         container.add(lastNameField);
@@ -95,7 +95,7 @@ public class Register extends JFrame {
         container.add(departmentLabel);
 
         departmentField = new JTextField();
-        departmentField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        departmentField.setFont(new Font("Arial", Font.PLAIN, 15));
         departmentField.setSize(190, 20);
         departmentField.setLocation(180, 180);
         container.add(departmentField);
@@ -106,7 +106,7 @@ public class Register extends JFrame {
         container.add(emailLabel);
 
         emailField = new JTextField();
-        emailField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        emailField.setFont(new Font("Arial", Font.PLAIN, 15));
         emailField.setSize(190, 20);
         emailField.setLocation(180,210);
         container.add(emailField);
@@ -117,14 +117,17 @@ public class Register extends JFrame {
         container.add(passwordLabel);
 
         passwordField = new JPasswordField();
-        passwordField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 15));
         passwordField.setSize(190, 20);
         passwordField.setLocation(180,240);
         container.add(passwordField);
 
         // Button to register new emp
-        registerButton = new JButton("Register New Employee");
-        registerButton.setBounds(350, 395, 165, 55);
+        registerButton = new JButton("Register");
+        registerButton.setBounds(175, 280, 165, 55);
+        setFont(new Font("Arial", Font.PLAIN, 25));
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setBackground(new Color(56, 100, 100));
         container.add(registerButton);
 
         // Add an action listener to the register button
